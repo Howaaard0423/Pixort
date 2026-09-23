@@ -1,4 +1,6 @@
-# Pixort - 画师 / 角色 / 作品 / 整理
+# [Pixort](https://howaaard0423.github.io/Pixort/)
+
+## 画师 / 角色 / 作品 / 整理
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)   [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -14,12 +16,17 @@ Pixort/
 │   └── tests/          接口测试
 ├── frontend/           前端界面（原生 ES 模块，Swiss International Style）
 │   ├── css/ js/        样式与视图
+│   ├── demo/           静态演示用
 │   └── assets/
+├── tools/
+│   └── build_pages.py  组装 GitHub Pages
+├── docs/               架构、接口、代码审查记录
 ├── assets/             字体 / EXE 图标
 ├── pixort.spec         PyInstaller 打包脚本 → dist/Pixort.exe
 ├── build-exe.bat       一键打包
 ├── requirements.txt    可选依赖（不装也能跑）
-└── requirements-dev.txt 开发与打包依赖
+├── requirements-dev.txt 开发与打包依赖
+└── .github/workflows/  build-exe.yml 发版打包；pages.yml 发布静态演示站
 ```
 
 ---
@@ -47,7 +54,7 @@ python -m pip install -r requirements.txt   # 可选
 
 ### 方式二：EXE
 
-可前往[Releases](https://github.com/Howaaard0423/Pixort/releases)页面获取。
+可前往 [Releases](https://github.com/Howaaard0423/Pixort/releases) 页面获取。
 
 也可以选择如下方法：
 

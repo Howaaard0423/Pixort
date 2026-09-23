@@ -23,6 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from pixort_api import settings  # noqa: E402
 from pixort_api.app import Application  # noqa: E402
 from pixort_api.server import create_server  # noqa: E402
+from pixort_api.services import media  # noqa: E402
 
 # 1x1 transparent PNG - small enough to inline, valid enough for Pillow.
 PNG_BYTES = base64.b64decode(
@@ -337,7 +338,13 @@ class ApiTestCase(unittest.TestCase):
 
         _, after = self.get(f"/api/illustrations/{item['id']}")
         self.assertTrue(after["file_exists"], "重命名后的文件应被重新关联")
-        self.assertTrue(after["width"], "维护应补全图片尺寸")
+        self.assertTrue(after["file_size"], "维护应补全文件体积")
+        if media.PILLOW_AVAILABLE:
+            # Sizes always come from stat(); dimensions need the optional Pillow
+            # dependency, and probe_image() deliberately returns None without
+            # it.  Asserting dimensions unconditionally would test whether the
+            # runner happens to have Pillow, not whether maintenance works.
+            self.assertTrue(after["width"], "维护应补全图片尺寸")
 
     def test_17_tag_filter_and_reference_guards(self):
         _, listing = self.get("/api/illustrations?q=renamed")

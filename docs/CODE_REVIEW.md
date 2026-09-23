@@ -73,6 +73,7 @@
 | 30 | Jekyll 会跳过下划线开头的路径 | 构建时写入 `.nojekyll` |
 | 31 | 静态托管需要一个 SPA 回退规则 | 不需要：路由用的是 hash（`#/work/5`），任何路径都能直接打开 |
 | 32 | 在 Windows 上，`tools/build_pages.py` 会因为预览服务没关而抛一串 `WinError 32` | `shutil.rmtree` 的报错信息看不出「谁占着目录」 | 改成 `ignore_errors=True` 后再检查目录是否真的消失，是的话打印「目录正被占用，请先停掉 `--serve`」并返回 1 |
+| 33 | 第一次推送时，Pages 工作流在「运行后端测试」这一步挂了：17 项错了 1 项，`test_16` 报「维护应补全图片尺寸」 | 这条断言其实依赖可选依赖 Pillow，而 GitHub 的 runner 上没装；`media.probe_image()` 在没有 Pillow 时会**刻意**只返回文件体积、尺寸留 None，这是设计好的降级行为。断言把「runner 恰好装没装 Pillow」当成了被测行为 | 断言按能力分支：`file_size` 始终断言，`width/height` 只在 `media.PILLOW_AVAILABLE` 为真时断言。本地用 `PYTHONPATH` 屏蔽 Pillow 复现过同样的报错，改完后有 / 无 Pillow 两种环境都是 17 项全过 |
 
 ## 七、已知取舍
 
