@@ -136,6 +136,7 @@
 }
 
 .statusbar__spacer { flex: 1; }
+.statusbar__item--demo { color: var(--accent); font-weight: 700; }
 .statusbar__item--hint kbd { text-transform: none; }
 
 /* --- error band ----------------------------------------------------------- */

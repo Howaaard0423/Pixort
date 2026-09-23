@@ -4,7 +4,25 @@
  * The front end is served by the backend in the default setup, but it is a
  * standalone static app: point it at another host with `?api=https://…` or by
  * setting `window.PIXORT_API_BASE` before this module loads.
+ *
+ * When there is no backend at all - the GitHub Pages build, or any `?demo=1`
+ * link - the same interface is served from the bundled data in `demo.js`.
  */
+
+import { demoApi } from './demo.js';
+
+/**
+ * GitHub Pages only serves static files, so the published site runs on the
+ * bundled sample library. `?demo=0` and an explicit `?api=` always win.
+ */
+const IS_DEMO = (() => {
+  const params = new URLSearchParams(window.location.search);
+  const flag = params.get('demo');
+  if (flag !== null) return !['0', 'false', 'off'].includes(flag.trim().toLowerCase());
+  if (params.get('api')) return false;
+  if (window.PIXORT_DEMO === true) return true;
+  return window.location.protocol === 'file:' || window.location.hostname.endsWith('github.io');
+})();
 
 const BASE = (() => {
   const override = new URLSearchParams(window.location.search).get('api');
@@ -99,7 +117,7 @@ function absolutiseList(payload) {
   };
 }
 
-export const api = {
+const liveApi = {
   base: BASE,
 
   health: () => request('/api/health'),
@@ -201,3 +219,7 @@ export const api = {
     });
   },
 };
+
+/** What every view imports; swapped for the offline client in demo mode. */
+export const api = IS_DEMO ? demoApi : liveApi;
+export const isDemo = IS_DEMO;

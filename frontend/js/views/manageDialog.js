@@ -380,7 +380,12 @@ export function openManageDialog({ onChanged }) {
             text: '导出并下载',
             onClick: (event) => {
               event.preventDefault();
-              window.location.href = api.exportUrl({ password: password.value || undefined });
+              const url = api.exportUrl({ password: password.value || undefined });
+              if (!url) {
+                toast('演示模式不提供备份下载，请在本机运行后端。', { tag: '演示', kind: 'error' });
+                return;
+              }
+              window.location.href = url;
               window.setTimeout(loadExports, 1500);
             },
           }),

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" width="900" height="900" role="img" aria-label="演示图片 03">
+<rect width="900" height="900" fill="#f4f3f0"/>
+<rect x="90" y="90" width="720" height="720" fill="none" stroke="#111111" stroke-width="2"/><rect x="140" y="140" width="620" height="620" fill="none" stroke="#111111" stroke-width="2"/><rect x="190" y="190" width="520" height="520" fill="none" stroke="#e30613" stroke-width="8"/><rect x="240" y="240" width="420" height="420" fill="none" stroke="#111111" stroke-width="2"/><rect x="290" y="290" width="320" height="320" fill="none" stroke="#111111" stroke-width="2"/><rect x="340" y="340" width="220" height="220" fill="none" stroke="#111111" stroke-width="2"/>
+<g stroke="#111" stroke-opacity=".12" stroke-width="1"><line x1="0" y1="150" x2="900" y2="150"/><line x1="0" y1="300" x2="900" y2="300"/><line x1="0" y1="450" x2="900" y2="450"/><line x1="0" y1="600" x2="900" y2="600"/><line x1="0" y1="750" x2="900" y2="750"/></g>
+</svg>

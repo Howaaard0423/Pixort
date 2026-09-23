@@ -5,8 +5,8 @@
  * can be hosted anywhere (see `?api=` in api.js).
  */
 
-import { $, debounce } from './dom.js';
-import { api } from './api.js';
+import { $, debounce, el } from './dom.js';
+import { api, isDemo } from './api.js';
 import { scopeLabel, store } from './state.js';
 import { confirmAction, toast } from './overlay.js';
 import { renderRail } from './views/rail.js';
@@ -87,6 +87,21 @@ function setDensity(density) {
   store.set({ density });
   writePref(PREF.density, density);
   render();
+}
+
+/** Say up front that the sample library is not the visitor's data. */
+function showDemoNotice() {
+  const spacer = document.querySelector('.statusbar__spacer');
+  if (spacer) {
+    spacer.insertAdjacentElement(
+      'beforebegin',
+      el('span', {
+        class: 'statusbar__item statusbar__item--demo',
+        text: '演示模式 · 数据不写入磁盘',
+      }),
+    );
+  }
+  toast('这是 GitHub Pages 上的静态演示，展示的是内置示例作品。', { tag: '演示' });
 }
 
 /* -------------------------------------------------------------------------- */
@@ -243,9 +258,14 @@ function updateCounters() {
 
 function updateStatus() {
   const state = store.state;
-  hosts.status.api.textContent = state.health
-    ? `接口 v${state.health.version} · ${state.health.thumbnailer === 'pillow' ? '缩略图可用' : '缩略图不可用'}`
-    : '接口 —';
+  if (!state.health) {
+    hosts.status.api.textContent = '接口 —';
+  } else if (isDemo) {
+    hosts.status.api.textContent = `演示数据 v${state.health.version} · 静态托管`;
+  } else {
+    hosts.status.api.textContent =
+      `接口 v${state.health.version} · ${state.health.thumbnailer === 'pillow' ? '缩略图可用' : '缩略图不可用'}`;
+  }
   hosts.status.scope.textContent = state.view === 'detail' ? '作品详情' : scopeLabel(state);
   hosts.status.count.textContent = `${state.total} 件`;
 }
@@ -462,6 +482,8 @@ async function boot() {
   applyTheme(readPref(PREF.theme, 'system'));
   setDensity(readPref(PREF.density, 'grid'));
   setGridVisible(readPref(PREF.grid, 'off') === 'on');
+
+  if (isDemo) showDemoNotice();
 
   try {
     await loadLibrary();

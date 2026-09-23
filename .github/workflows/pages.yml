@@ -1,0 +1,61 @@
+---
+name: 部署静态演示站
+
+# frontend/ 本身就是纯静态站点，推到 main 就重新组装并发布到 GitHub Pages。
+# 发布出去的是同一套界面 + 内置示例数据（frontend/js/demo.js），
+# 个人图库（illustration_manager.db / illustrations/）不会离开本机。
+#
+# 首次使用：仓库 Settings → Pages → Build and deployment → Source 选
+# "GitHub Actions"，然后推一次 main（或在 Actions 页手动 Run workflow）。
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只跑一次部署，新的推送取消排队中的旧任务
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 运行后端测试
+        run: python -m unittest discover -s backend/tests -t backend
+
+      - name: 组装静态站点
+        run: python tools/build_pages.py
+
+      - name: 配置 Pages
+        uses: actions/configure-pages@v5
+
+      - name: 上传站点
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 发布到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

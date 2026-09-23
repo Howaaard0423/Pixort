@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 import sys
 import webbrowser
 from pathlib import Path
@@ -20,7 +21,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--host", default=settings.HOST, help="监听地址（默认 %(default)s）")
     parser.add_argument("--port", type=int, default=settings.PORT, help="监听端口（默认 %(default)s）")
-    parser.add_argument("--data-root", type=Path, default=None, help="数据库与图片所在目录")
+    parser.add_argument(
+        "--data-root", type=Path, default=None, help="数据库、图片与缓存所在目录"
+    )
     parser.add_argument("--frontend", type=Path, default=None, help="前端静态目录")
     parser.add_argument("--open", action="store_true", help="启动后自动打开浏览器")
     parser.add_argument("--quiet", action="store_true", help="不打印每个请求的日志")
@@ -48,6 +51,15 @@ def main(argv: list[str] | None = None) -> int:
         settings.DB_PATH = settings.DATA_ROOT / "illustration_manager.db"
         settings.ILLUSTRATIONS_DIR = settings.DATA_ROOT / "illustrations"
         settings.ARCHIVE_DIR = settings.DATA_ROOT / "archive_illustrations"
+        # The cache holds derived thumbnails, so it belongs with the library it
+        # describes - otherwise ``--data-root`` still scatters files next to the
+        # source tree (or next to the EXE) and "copy the folder" is only half true.
+        # An explicit PIXORT_CACHE still wins, for people who want the cache on
+        # a faster disk than the archive.
+        if not os.environ.get("PIXORT_CACHE"):
+            settings.CACHE_DIR = settings.DATA_ROOT / ".cache"
+            settings.THUMBNAIL_DIR = settings.CACHE_DIR / "thumbnails"
+            settings.TEMP_DIR = settings.CACHE_DIR / "tmp"
     if args.frontend is not None:
         settings.FRONTEND_DIR = args.frontend.expanduser().resolve()
 
