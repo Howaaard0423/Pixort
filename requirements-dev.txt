@@ -1,0 +1,7 @@
+# 开发与打包用依赖
+#
+#     python -m pip install -r requirements-dev.txt
+#     pyinstaller --clean --noconfirm pixort.spec
+
+-r requirements.txt
+pyinstaller>=6.0

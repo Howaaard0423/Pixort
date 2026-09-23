@@ -1,0 +1,32 @@
+# ---- Python ----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# ---- 打包产物 --------------------------------------------------------------
+build/
+dist/
+*.spec.bak
+upx/
+
+# ---- 运行时缓存 ------------------------------------------------------------
+.cache/
+backend/.cache/
+
+# ---- 个人图库数据（只在本机使用，不随仓库分发）----------------------------
+# 需要迁移或分享图库时用「管理 → 导出备份」，而不是提交这些文件。
+illustration_manager.db
+illustration_manager.db-wal
+illustration_manager.db-shm
+*.db.bak-*
+illustrations/
+archive_illustrations/
+illustrations_old_*/
+备份_*.zip
+
+# ---- 编辑器 / 系统 ---------------------------------------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

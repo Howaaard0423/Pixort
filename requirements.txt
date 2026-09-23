@@ -1,0 +1,14 @@
+# Pixort 依赖
+#
+# 后端只用 Python 标准库（http.server + sqlite3）就能完整运行，下面两个包属于
+# 可选增强——装上界面会多出「服务端缩略图」与「加密备份」两项能力：
+#
+#   pillow    服务端生成缩略图、读取图片尺寸与朝向
+#   pyzipper  生成 / 读取 AES 加密的备份压缩包
+#
+# 安装：
+#     python -m pip install -r requirements.txt
+#
+# 打包 EXE 还需要 PyInstaller，见 requirements-dev.txt
+pillow>=10.0.0
+pyzipper>=0.3.6

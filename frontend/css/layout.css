@@ -1,0 +1,166 @@
+/* ==========================================================================
+   Page skeleton: masthead, ledger, control bar, rail, stage, status bar
+   Layout is a strict two-axis grid; every edge sits on a hairline.
+   ========================================================================== */
+
+.masthead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--gutter);
+  flex-wrap: wrap;
+  padding: calc(var(--unit) * 2) var(--margin) calc(var(--unit) * 1.5);
+  border-bottom: var(--rule-hard-w) solid var(--rule-hard);
+}
+
+.masthead__brand { min-width: 0; }
+
+.wordmark {
+  font-size: var(--size-display);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+}
+
+.masthead__tagline {
+  margin-top: calc(var(--unit) * 0.5);
+  font-size: var(--size-micro);
+  letter-spacing: var(--track-micro);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* --- ledger: numbers as structure ---------------------------------------- */
+.ledger {
+  display: flex;
+  align-items: stretch;
+  border-left: var(--rule-w) solid var(--rule);
+}
+
+.ledger__cell {
+  min-width: 74px;
+  padding: calc(var(--unit) * 0.5) calc(var(--unit) * 1.5);
+  border-right: var(--rule-w) solid var(--rule);
+}
+
+.ledger__cell dt {
+  font-size: var(--size-micro);
+  letter-spacing: var(--track-micro);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.ledger__cell dd {
+  font-size: var(--size-head);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: var(--track-tight);
+  font-variant-numeric: tabular-nums;
+}
+
+.ledger__cell--alert dd { color: var(--accent); }
+
+/* --- control bar ---------------------------------------------------------- */
+.controlbar {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--gutter);
+  flex-wrap: wrap;
+  padding: calc(var(--unit) * 1.5) var(--margin);
+  border-bottom: var(--rule-w) solid var(--rule);
+  background: var(--paper);
+}
+
+.controlbar__actions {
+  display: flex;
+  gap: calc(var(--unit) * 0.75);
+  margin-left: auto;
+}
+
+/* --- workspace ------------------------------------------------------------ */
+.workspace {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: var(--rail-w) minmax(0, 1fr);
+}
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: var(--rule-w) solid var(--rule);
+}
+
+.rail__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--unit);
+  padding: calc(var(--unit) * 1.25) calc(var(--unit) * 2);
+  border-bottom: var(--rule-w) solid var(--rule);
+  background: var(--paper);
+}
+
+.rail__head--sub { border-top: var(--rule-w) solid var(--rule); }
+
+.rail__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.rail__section { border-top: var(--rule-hard-w) solid var(--rule-hard); }
+
+.stage {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-padding-top: var(--unit);
+}
+
+/* --- status bar ----------------------------------------------------------- */
+.statusbar {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--unit) * 2);
+  padding: calc(var(--unit) * 0.75) var(--margin);
+  border-top: var(--rule-hard-w) solid var(--rule-hard);
+  font-size: var(--size-micro);
+  letter-spacing: var(--track-micro);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  background: var(--paper);
+}
+
+.statusbar__spacer { flex: 1; }
+.statusbar__item--hint kbd { text-transform: none; }
+
+/* --- error band ----------------------------------------------------------- */
+.alertbar {
+  padding: calc(var(--unit) * 1.25) var(--margin);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: var(--size-small);
+  letter-spacing: 0.02em;
+  display: flex;
+  gap: var(--unit);
+  align-items: baseline;
+}
+.alertbar strong { font-weight: 700; }
+
+/* --- responsive ----------------------------------------------------------- */
+@media (max-width: 900px) {
+  .workspace { grid-template-columns: minmax(0, 1fr); }
+  .rail {
+    border-right: none;
+    border-bottom: var(--rule-w) solid var(--rule);
+    max-height: 42vh;
+  }
+  .masthead { align-items: flex-start; }
+  .ledger { border-left: none; }
+  .controlbar__actions { margin-left: 0; width: 100%; }
+  .statusbar__item--hint { display: none; }
+}

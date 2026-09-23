@@ -1,0 +1,88 @@
+/* ==========================================================================
+   Pixort — design tokens
+   Swiss International Style: objective typography, one accent, no decoration.
+   ========================================================================== */
+
+:root {
+  /* --- palette ---------------------------------------------------------- */
+  --paper: #ffffff;
+  --ink: #000000;
+  --ink-soft: #3d3d3d;
+  --ink-mute: #767676;
+  --rule: #d4d4d4;
+  --rule-hard: #000000;
+  --field: #f2f2f2;
+  --field-strong: #e4e4e4;
+  --accent: #e30613;
+  --accent-ink: #ffffff;
+  --shadow: none;
+
+  /* --- type ------------------------------------------------------------- */
+  --font-sans: "Helvetica Neue", Helvetica, Arial, "Inter", "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC",
+    "Noto Sans SC", sans-serif;
+  --font-mono: "SFMono-Regular", "JetBrains Mono", Consolas, "Liberation Mono", monospace;
+
+  --size-micro: 10px;
+  --size-small: 12px;
+  --size-body: 14px;
+  --size-lead: 16px;
+  --size-title: 22px;
+  --size-head: 34px;
+  --size-display: clamp(38px, 5.4vw, 64px);
+
+  --track-micro: 0.14em;
+  --track-tight: -0.02em;
+  --track-display: -0.035em;
+
+  --leading-tight: 1.06;
+  --leading-body: 1.5;
+
+  /* --- geometry --------------------------------------------------------- */
+  --rule-w: 1px;
+  --rule-hard-w: 2px;
+  --unit: 8px;
+  --gutter: clamp(16px, 2vw, 24px);
+  --margin: clamp(16px, 3vw, 32px);
+  --rail-w: clamp(220px, 22vw, 320px);
+  --control-h: 34px;
+
+  /* --- motion (used only for state, never decoration) -------------------- */
+  --snap: 90ms cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* Inverted scheme: same structure, inverted value. */
+:root[data-theme="dark"] {
+  --paper: #0d0d0d;
+  --ink: #ffffff;
+  --ink-soft: #d0d0d0;
+  --ink-mute: #8f8f8f;
+  --rule: #3a3a3a;
+  --rule-hard: #ffffff;
+  --field: #1a1a1a;
+  --field-strong: #262626;
+  --accent: #ff3b30;
+  --accent-ink: #0d0d0d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme-mode="system"] {
+    --paper: #0d0d0d;
+    --ink: #ffffff;
+    --ink-soft: #d0d0d0;
+    --ink-mute: #8f8f8f;
+    --rule: #3a3a3a;
+    --rule-hard: #ffffff;
+    --field: #1a1a1a;
+    --field-strong: #262626;
+    --accent: #ff3b30;
+    --accent-ink: #0d0d0d;
+  }
+}
+
+/* Reveal the underlying 12-column grid (press G). */
+:root {
+  --grid-columns: 12;
+  --grid-color: color-mix(in srgb, var(--accent) 26%, transparent);
+  --baseline-color: color-mix(in srgb, var(--accent) 12%, transparent);
+}

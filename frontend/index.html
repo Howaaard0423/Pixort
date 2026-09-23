@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN" data-theme-mode="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Pixort — 画师作品档案</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/views.css">
+</head>
+<body>
+  <a class="skip-link" href="#gallery">跳到作品列表</a>
+  <div class="grid-overlay" aria-hidden="true" data-grid-overlay></div>
+
+  <header class="masthead">
+    <div class="masthead__brand">
+      <h1 class="wordmark">Pixort</h1>
+      <p class="masthead__tagline">画师 · 角色 · 作品档案</p>
+    </div>
+    <dl class="ledger" data-counters>
+      <div class="ledger__cell">
+        <dt>作品</dt><dd data-count="illustrations">—</dd>
+      </div>
+      <div class="ledger__cell">
+        <dt>画师</dt><dd data-count="artists">—</dd>
+      </div>
+      <div class="ledger__cell">
+        <dt>角色</dt><dd data-count="characters">—</dd>
+      </div>
+      <div class="ledger__cell ledger__cell--alert">
+        <dt>缺失</dt><dd data-count="missing">—</dd>
+      </div>
+    </dl>
+  </header>
+
+  <div class="controlbar" role="toolbar" aria-label="筛选与视图">
+    <div class="field field--search">
+      <label class="field__label" for="search">搜索</label>
+      <input id="search" class="field__input" type="search" autocomplete="off"
+             placeholder="画师、角色、标题、标签…" data-search>
+      <kbd class="field__hint">/</kbd>
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="sort">排序</label>
+      <select id="sort" class="field__input" data-sort>
+        <option value="created_desc">最新导入</option>
+        <option value="created_asc">最早导入</option>
+        <option value="title_asc">标题 A→Z</option>
+        <option value="rating_desc">评分最高</option>
+        <option value="artist_asc">按画师</option>
+        <option value="manual">手动顺序</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <span class="field__label">评分下限</span>
+      <div class="segmented" data-rating-filter role="group" aria-label="评分下限">
+        <button type="button" class="segmented__item" data-rating="" aria-pressed="true">全部</button>
+        <button type="button" class="segmented__item" data-rating="3" aria-pressed="false">3★</button>
+        <button type="button" class="segmented__item" data-rating="4" aria-pressed="false">4★</button>
+        <button type="button" class="segmented__item" data-rating="5" aria-pressed="false">5★</button>
+      </div>
+    </div>
+
+    <div class="controlbar__actions">
+      <button type="button" class="button button--solid" data-action="import">导入作品</button>
+      <button type="button" class="button" data-action="manage">管理</button>
+      <button type="button" class="button" data-action="theme" aria-label="切换主题">主题</button>
+      <button type="button" class="button" data-action="grid-mode" aria-pressed="false"
+              title="显示版式网格 (G)">网格</button>
+    </div>
+  </div>
+
+  <main class="workspace">
+    <aside class="rail" aria-label="索引">
+      <div class="rail__head">
+        <h2 class="rubric">索引</h2>
+        <span class="rubric rubric--muted">Index</span>
+      </div>
+      <div class="rail__body">
+        <nav class="index" data-artist-index aria-label="画师索引"></nav>
+        <section class="rail__section">
+          <div class="rail__head rail__head--sub">
+            <h2 class="rubric">标签</h2>
+            <span class="rubric rubric--muted">Tags</span>
+          </div>
+          <div class="taglist" data-tag-index></div>
+        </section>
+        <section class="rail__section">
+          <div class="rail__head rail__head--sub">
+            <h2 class="rubric">角色</h2>
+            <span class="rubric rubric--muted">Characters</span>
+          </div>
+          <div class="taglist" data-character-index></div>
+        </section>
+      </div>
+    </aside>
+
+    <section class="stage" id="gallery" aria-live="polite">
+      <div data-stage></div>
+    </section>
+  </main>
+
+  <footer class="statusbar">
+    <span class="statusbar__item" data-status-api>接口 —</span>
+    <span class="statusbar__item" data-status-scope>全部作品</span>
+    <span class="statusbar__item" data-status-count>0 件</span>
+    <span class="statusbar__spacer"></span>
+    <span class="statusbar__item statusbar__item--hint">
+      <kbd>/</kbd> 搜索 · <kbd>G</kbd> 网格 · <kbd>I</kbd> 导入 · <kbd>Esc</kbd> 关闭
+    </span>
+  </footer>
+
+  <div class="alertbar" data-error-bar hidden></div>
+  <div class="overlay-root" data-overlay-root></div>
+  <div class="toaster" data-toaster aria-live="polite"></div>
+  <div class="viewer" data-viewer hidden></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
